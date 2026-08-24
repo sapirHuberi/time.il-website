@@ -1,0 +1,14 @@
+---
+description: Time.il website UI language must be Hebrew
+alwaysApply: true
+---
+
+# Hebrew UI copy
+
+The Time.il website is Hebrew-first (`lang="he"`, `dir="rtl"`).
+
+- All user-facing text must be in Hebrew: headings, body copy, buttons, links, labels, alt text, aria-labels, empty states, and errors.
+- Do not leave English CTAs or section titles in the UI (e.g. use `לעוד עבודות`, not `View More Work`).
+- Brand names that are intentionally Latin may stay as-is (e.g. `Time.il`).
+- Keep RTL layout conventions; do not flip the site to LTR for new sections.
+- Code comments and internal identifiers (variable/file names) may stay in English.

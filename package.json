@@ -1,0 +1,23 @@
+{
+  "name": "time-il-website",
+  "version": "1.0.0",
+  "description": "Time.il — מעבדת תיקון שעונים",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,yellow \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/server.js",
+    "client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "concurrently": "^10.0.5",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
