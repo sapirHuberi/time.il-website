@@ -4,7 +4,6 @@ import Hero from '../components/Hero';
 import About from '../components/About';
 import Services from '../components/Services';
 import Portfolio from '../components/Portfolio';
-import Testimonials from '../components/Testimonials';
 import Straps from '../components/Straps';
 import Contact from '../components/Contact';
 
@@ -28,7 +27,6 @@ export default function Home() {
       <About />
       <Services />
       <Portfolio />
-      <Testimonials />
       <Straps />
       <Contact />
     </>
