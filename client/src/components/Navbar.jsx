@@ -1,7 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, Search, X } from 'lucide-react';
-import watchLogo from '../assets/watch-logo.svg';
 import { navLinks } from '../data/navLinks';
 import { searchSite } from '../data/searchIndex';
 
@@ -176,7 +175,7 @@ export default function Navbar() {
           className="flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-90"
           aria-label="Time.il — מעבדת תיקון שעונים"
         >
-          <img src={watchLogo} alt="" className="h-9 w-9" width={36} height={36} />
+          <img src="/watch-logo.svg" alt="" className="h-9 w-9" width={36} height={36} />
           <span className="font-script text-3xl leading-none text-gold md:text-4xl">
             Time.il
           </span>

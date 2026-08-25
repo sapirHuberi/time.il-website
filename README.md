@@ -21,5 +21,8 @@ npm run dev
 
 ## מבנה
 
-- `client/` — React + Vite + Tailwind  
-- `server/server.js` — Express: הודעות צ׳אט ופרוקסי ל-n8n  
+- `client/` — React + Vite + Tailwind
+  - `src/` — רכיבים, דפים ונתונים
+  - `public/` — לוגו ווידאו סטטיים
+  - `images/` — תמונות מעבדה
+- `server/server.js` — Express: הודעות צ׳אט ופרוקסי ל-n8n

@@ -15,6 +15,7 @@ const USED_FILENAMES = new Set([
   'IMG-20260216-WA0006.jpg',
   'IMG-20260427-WA0000.jpg',
   'IMG-20260516-WA0003 (1).jpg',
+  'IMG-20260516-WA0003.jpg',
   'IMG-20260817-WA0004.jpg',
   'IMG_20241212_181729.jpg',
   'IMG_20250531_220618.jpg',
@@ -22,8 +23,6 @@ const USED_FILENAMES = new Set([
   'IMG_20251031_125150.jpg',
   'IMG_20260131_200359.jpg',
   'IMG_20260824_161926.jpg',
-  'pexels-atelier-kommpass-2152247243-35136298.jpg',
-  'pexels-huy-phan-316220-38797596.jpg',
   'pexels-ranjit-pradhan-943095-13597651.jpg',
 ]);
 
@@ -95,6 +94,3 @@ function interleaveEvenly(images, videos) {
 }
 
 export const galleryItems = interleaveEvenly(galleryImages, galleryVideos);
-
-/** @deprecated Prefer galleryItems — kept for any older imports. */
-export const galleryPhotos = galleryItems;

@@ -27,16 +27,13 @@ export default function Services() {
               slug,
               title,
               description,
-              icon: Icon,
               image,
-              cardImage,
               imageAlt,
               imageObjectClass,
               imageCardObjectClass,
             }, index) => {
-            const hasImage = Boolean(image || cardImage);
+            const hasImage = Boolean(image);
             const detailPath = `/services/${slug}`;
-            const cardSrc = cardImage ?? image;
             const cardImageClass = [
               'object-cover',
               imageCardObjectClass ?? imageObjectClass ?? 'object-center',
@@ -56,7 +53,7 @@ export default function Services() {
                   {hasImage ? (
                     <>
                       <img
-                        src={cardSrc}
+                        src={image}
                         alt={imageAlt}
                         className={[
                           'pointer-events-none absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100',
@@ -70,16 +67,9 @@ export default function Services() {
                     </>
                   ) : null}
 
-                  {Icon ? (
-                    <span className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/35 bg-navy-deep/5 text-gold transition duration-300 group-hover:border-gold group-hover:bg-navy-deep group-hover:text-gold">
-                      <Icon className="h-5 w-5" strokeWidth={1.6} aria-hidden="true" />
-                    </span>
-                  ) : null}
-
                   <h3
                     className={[
                       'relative z-10 shrink-0 font-display text-base font-bold leading-snug text-navy-deep transition-colors duration-300 md:text-lg',
-                      Icon ? 'mt-3' : '',
                       hasImage
                         ? 'group-hover:text-surface group-focus-within:text-surface group-active:text-surface'
                         : '',

@@ -8,36 +8,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC_VIDEOS_DIR = path.resolve(__dirname, 'public', 'videos');
 /** Skip clips larger than this — 145MB phone dumps freeze the gallery. */
 const MAX_GALLERY_VIDEO_BYTES = 40 * 1024 * 1024;
-const DEBUG_LOG = path.resolve(__dirname, '..', 'debug-8bd24b.log');
 const VIRTUAL_ID = 'virtual:gallery-videos';
 const RESOLVED_VIRTUAL_ID = `\0${VIRTUAL_ID}`;
-
-// #region agent log
-function agentLog(hypothesisId, location, message, data = {}) {
-  const payload = {
-    sessionId: '8bd24b',
-    runId: 'static-videos',
-    hypothesisId,
-    location,
-    message,
-    data,
-    timestamp: Date.now(),
-  };
-  try {
-    fs.appendFileSync(DEBUG_LOG, `${JSON.stringify(payload)}\n`);
-  } catch {
-    /* ignore */
-  }
-  fetch('http://127.0.0.1:7387/ingest/66850a6d-f743-426a-9476-917e1f2750b3', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Debug-Session-Id': '8bd24b',
-    },
-    body: JSON.stringify(payload),
-  }).catch(() => {});
-}
-// #endregion
 
 function listGalleryVideos() {
   if (!fs.existsSync(PUBLIC_VIDEOS_DIR)) {
@@ -81,22 +53,7 @@ function galleryVideosPlugin() {
     load(id) {
       if (id !== RESOLVED_VIRTUAL_ID) return undefined;
 
-      const { included, skipped, missingDir } = listGalleryVideos();
-
-      // #region agent log
-      agentLog('H', 'vite.config.js:galleryVideosPlugin', 'gallery video manifest built', {
-        missingDir,
-        includedCount: included.length,
-        skippedCount: skipped.length,
-        included: included.map((v) => ({ fileName: v.fileName, sizeMB: v.sizeMB })),
-        skipped: skipped.map((v) => ({
-          fileName: v.fileName,
-          sizeMB: v.sizeMB,
-          reason: v.reason,
-        })),
-        maxMB: MAX_GALLERY_VIDEO_BYTES / (1024 * 1024),
-      });
-      // #endregion
+      const { included, skipped } = listGalleryVideos();
 
       if (skipped.length) {
         const names = skipped.map((v) => `${v.fileName} (${v.sizeMB}MB)`).join(', ');

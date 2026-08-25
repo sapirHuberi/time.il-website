@@ -63,6 +63,17 @@ app.post('/api/messages', async (req, res) => {
   };
 
   try {
+    // #region agent log
+    let _dbgUrlMeta = { configured: false };
+    try {
+      const u = new URL(N8N_WEBHOOK_URL);
+      _dbgUrlMeta = { configured: true, host: u.hostname, port: u.port || (u.protocol === 'https:' ? '443' : '80'), protocol: u.protocol, pathHasChat: u.pathname.includes('/chat') };
+    } catch (_) {
+      _dbgUrlMeta = { configured: true, parseError: true };
+    }
+    fetch('http://127.0.0.1:7387/ingest/66850a6d-f743-426a-9476-917e1f2750b3',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'2c339e'},body:JSON.stringify({sessionId:'2c339e',location:'server.js:messages:before-fetch',message:'About to proxy to n8n',data:_dbgUrlMeta,timestamp:Date.now(),hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+
     const upstream = await fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -73,6 +84,10 @@ app.post('/api/messages', async (req, res) => {
     const data = contentType.includes('application/json')
       ? await upstream.json()
       : { raw: await upstream.text() };
+
+    // #region agent log
+    fetch('http://127.0.0.1:7387/ingest/66850a6d-f743-426a-9476-917e1f2750b3',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'2c339e'},body:JSON.stringify({sessionId:'2c339e',location:'server.js:messages:after-fetch',message:'n8n upstream responded',data:{ok:upstream.ok,status:upstream.status,contentType},timestamp:Date.now(),hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
 
     if (!upstream.ok) {
       return res.status(502).json({
@@ -93,6 +108,9 @@ app.post('/api/messages', async (req, res) => {
       data,
     });
   } catch (err) {
+    // #region agent log
+    fetch('http://127.0.0.1:7387/ingest/66850a6d-f743-426a-9476-917e1f2750b3',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'2c339e'},body:JSON.stringify({sessionId:'2c339e',location:'server.js:messages:catch',message:'n8n proxy fetch failed',data:{errMessage:err&&err.message,errName:err&&err.name,causeCode:err&&err.cause&&err.cause.code,causeMessage:err&&err.cause&&err.cause.message},timestamp:Date.now(),hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
     console.error('[messages] n8n proxy failed:', err.message);
     return res.status(502).json({
       error: 'לא ניתן להתחבר לשירות העוזר כרגע',
